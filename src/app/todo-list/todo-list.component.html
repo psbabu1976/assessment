@@ -1,0 +1,46 @@
+<div style="float:right;cursor: pointer;font-size: small" [routerLink]="['login']">Logout</div>
+<table class="todos">
+  <td width="300"><h2>Todo-List</h2></td>
+  <td width="300"
+      (click)="adnew.hidden = addNew = true;selectedTodo = _todo = null"
+      style="cursor: pointer" [hidden]="true" #adnew>Add New>></td>
+</table>
+<ul class="todos">
+  <li *ngFor="let todo of todoList, let i = index"
+      [class.selected]="todo === selectedTodo"
+      (click)="addNew = false;onSelect(todo,i)">
+    <span class="badge">{{i+1}}</span>
+          {{todo.todo}}
+
+  </li>
+</ul>
+<div *ngIf="selectedTodo" class="panel" style="width: 400px">
+  <h2 class="panel header">{{ selectedTodo.todo | uppercase }} Details</h2>
+  <div class="content"><span>Id: </span>{{selectedTodo.id+1}}</div>
+  <div>
+    <label class="content">Todo:
+      <input [(ngModel)]=_todo placeholder=_todo>
+      <button (click)="adnew.hidden = false;done('')">Update</button>
+      <button (click)="showDel=true">Delete</button>
+    </label><br/><br/>
+  </div>
+  <div *ngIf="showDel"><br/>
+    <div class="content">
+      Delete?
+      <button (click)="del('');adnew.hidden=false">Yes</button>
+      <button (click)="showDel=false">No</button>
+    </div>
+  </div>
+  <button style="align-self: center;margin-left: 150px"
+          (click)="adnew.hidden=showDel=false;selectedTodo=null">Close</button>
+</div>
+
+<div *ngIf="addNew">
+  <h2>Add New Todo</h2>
+    <label>Todo:
+      <input [(ngModel)]=_todo placeholder='new todo' #newtodo>
+      <button (click)="done('add')">Add</button>
+      <button (click)="addNew = adnew.hidden = false">Cancel</button>
+    </label><br/>
+</div>
+
